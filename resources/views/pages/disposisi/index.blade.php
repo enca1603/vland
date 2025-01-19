@@ -23,27 +23,29 @@
 <div class="row">
     <div class="col-md">
         <div class="card mb-2">
-            <div class="card-header d-flex justify-content-between pb-0">
-                <div class="card-title">
-                    <h5 class="mb-1">{{ $dis->status->sifat }}</h5>
-                    <p class="card-subtitle mb-1">Kepada : {{ $dis->kepada }}</p>
-                    <p class="card-subtitle">Tenggat Waktu : {{ $dis->tanggal }}</p>
+            <div class="card-header header-elements">
+                <h5 class="mb-0 me-2">Kepada : {{ $dis->kepada }}</h5>
+                <div class="card-header-elements">
+                    <span class="badge bg-danger rounded-pill">{{ $dis->status->sifat }}</span>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-text-secondary rounded-pill text-muted border-0 p-2 me-n1" type="button"
-                        id="MonthlyCampaign" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ti ti-dots-vertical ti-md text-muted"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="MonthlyCampaign">
-                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                        <a class="dropdown-item" href="javascript:void(0);">Download</a>
-                        <a class="dropdown-item" href="javascript:void(0);">View All</a>
+
+                <div class="card-header-elements ms-auto">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-primary waves-effect waves-light"
+                            data-bs-toggle="dropdown" aria-expanded="false">Aksi</button>
+                        <button type="button"
+                            class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                            data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <div class="dropdown-menu" style="">
+                            <a class="dropdown-item waves-effect" href="javascript:void(0)">Edit</a>
+                            <a class="dropdown-item waves-effect" href="javascript:void(0)">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 <hr>
-                <p>{{ $dis->isi }}</p>
+                <p class="card-text">{{ $dis->isi }}</p>
             </div>
         </div>
     </div>
