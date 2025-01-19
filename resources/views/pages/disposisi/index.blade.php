@@ -20,32 +20,34 @@
 </div>
 
 @foreach ($disposisi as $dis)
-<div class="row">
+<div class="row mb-2">
     <div class="col-md">
-        <div class="card mb-2">
-            <div class="card-header header-elements">
-                <h5 class="mb-0 me-2">Kepada : {{ $dis->kepada }}</h5>
-                <div class="card-header-elements">
-                    <span class="badge bg-danger rounded-pill">{{ $dis->status->sifat }}</span>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <h5 class="card-title mb-2">Kepada : <span class="text-bold">{{ $dis->kepada }}</span>
+                        <span class="badge bg-danger rounded-pill">{{ $dis->status->sifat }}</span>
+                    </h5>
+                    <span class="text-muted">Tenggat Waktu</span>
+                    <span class="text-muted">{{ $dis->tanggal }}</span>
                 </div>
 
-                <div class="card-header-elements ms-auto">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-primary waves-effect waves-light"
-                            data-bs-toggle="dropdown" aria-expanded="false">Aksi</button>
-                        <button type="button"
-                            class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light"
-                            data-bs-toggle="dropdown" aria-expanded="false"></button>
-                        <div class="dropdown-menu" style="">
-                            <a class="dropdown-item waves-effect" href="javascript:void(0)">Edit</a>
-                            <a class="dropdown-item waves-effect" href="javascript:void(0)">Delete</a>
-                        </div>
+
+                <div class="btn-group">
+                    <button type="button"
+                        class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light"
+                        data-bs-toggle="dropdown"></button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Action</a>
+                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Another action</a>
+                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Separated link</a>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <hr>
-                <p class="card-text">{{ $dis->isi }}</p>
+
             </div>
         </div>
     </div>
