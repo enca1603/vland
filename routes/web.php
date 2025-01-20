@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/{suratMasuk}', [DisposisiController::class, 'store'])->name('surat.suratmasuk.disposisi.store');
                 Route::get('/{id}/edit', [DisposisiController::class, 'edit'])->name('surat.suratmasuk.disposisi.edit');
                 Route::put('/{id}/update', [DisposisiController::class, 'update'])->name('surat.suratmasuk.disposisi.update');
+                Route::post('/destroy/{id}', [DisposisiController::class, 'destroy'])->name('surat.suratmasuk.disposisi.destroy');
             });
         });
 

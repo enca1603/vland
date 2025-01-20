@@ -175,11 +175,25 @@ class SuratMasukController extends Controller
 
                 return '
                     <a type="button" class="btn btn-sm btn-primary" href="' . route('surat.suratmasuk.disposisi.index', $row->id) . '">Disposisi
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger ms-1_5 pt-50">'.$disp.'</span>
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger ms-1_5 pt-50">' . $disp . '</span>
                     </a>
-                    <a type="button" class="btn btn-sm btn-success" href="' . route('surat.suratmasuk.edit', $row->id) . '">Edit</a>
-                    <a type="button" class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="_delete(' . "'" . $row->id . "'" . ')">Hapus</a>
+                    <button type="button" class="btn btn-label-primary dropdown-toggle waves-effect" data-bs-toggle="dropdown" aria-expanded="false">
+                        Aksi
+                    </button>
+
+                    <ul class="dropdown-menu" style="">
+                        <li><a class="dropdown-item waves-effect" href="' . route('surat.suratmasuk.edit', $row->id) . '">Edit</a></li>
+                        <li><a class="dropdown-item waves-effect" href="javascript:void(0);" onclick="_delete(' . "'" . $row->id . "'" . ')">Hapus</a></li>
+                    </ul>
                 ';
+
+                // return '
+                //     <a type="button" class="btn btn-sm btn-primary" href="' . route('surat.suratmasuk.disposisi.index', $row->id) . '">Disposisi
+                //         <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger ms-1_5 pt-50">'.$disp.'</span>
+                //     </a>
+                //     <a type="button" class="btn btn-sm btn-success" href="' . route('surat.suratmasuk.edit', $row->id) . '">Edit</a>
+                //     <a type="button" class="btn btn-sm btn-danger" href="javascript:void(0);" onclick="_delete(' . "'" . $row->id . "'" . ')">Hapus</a>
+                // ';
             })
             ->rawColumns(['lampiran', 'aksi'])
             ->make(true);

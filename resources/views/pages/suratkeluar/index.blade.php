@@ -1,9 +1,9 @@
-@extends('layouts.admin',['title' => 'Surat Masuk'])
+@extends('layouts.admin',['title' => 'Surat Keluar'])
 
 @section('content')
 <!-- Content -->
 
-<h4 class="py-4 mb-6">Surat Masuk</h4>
+<h4 class="py-4 mb-6">Surat Keluar</h4>
 <div class="card">
     <div class="card-header">
         <a href="{{ route('surat.suratkeluar.create') }}" class="btn btn-primary d-inline my-3">Data Baru</a>

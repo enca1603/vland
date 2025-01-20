@@ -20,58 +20,98 @@
 </div>
 
 @foreach ($disposisi as $dis)
-<div class="row mb-2">
-    <div class="col-md">
-        <div class="card mb-6">
-            <div class="card-header header-elements">
-                <h5 class="mb-0 me-2">Disposisi</h5>
-
-                <div class="card-header-elements ms-auto">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-danger waves-effect waves-light"><i
-                                class="fa fa-trash"></i></button>
-                        <a type="button" class="btn btn-success waves-effect waves-light"
-                            href="{{ route('surat.suratmasuk.disposisi.edit', $dis->id) }}"><i
-                                class="fa fa-pencil"></i></a>
+<div class="card mb-4">
+    <div class="card-header pb-0">
+        <div class="d-flex justify-content-between flex-column flex-sm-row">
+            <div class="card-title">
+                <h5 class="text-nowrap mb-0 fw-bold">{{ $dis->kepada }}</h5>
+                <small class="text-black">Sifat Surat : {{ $dis->status->sifat }}</small>
+            </div>
+            <div class="card-title d-flex flex-row">
+                <div class="d-inline-block mx-2 text-end text-black">
+                    <small class="d-block text-secondary">Tenggat Waktu</small>
+                    {{ $dis->getFormatTanggal() }}
+                </div>
+                <div class="dropdown d-inline-block">
+                    <button
+                        class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow waves-effect waves-light"
+                        type="button" id="earningReportsId" data-bs-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="ti ti-dots-vertical ti-md text-muted"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId">
+                        <a class="dropdown-item" href="javascript:void(0);">Print</a>
+                        <a class="dropdown-item"
+                            href="{{ route('surat.suratmasuk.disposisi.edit', $dis->id) }}">Edit</a>
+                        <a class="dropdown-item" href="javascript:void(0);"
+                            onclick="_delete('{{ $dis->id }}')">Delete</a>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr class="bg-body">
-                            <th>Kepada :</th>
-                            <th>Tenggat Waktu :</th>
-                            <th>Sifat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $dis->kepada }}</td>
-                            <td>{{ \Carbon\Carbon::parse($dis->tanggal)->format('d F Y') }}</td>
-                            <td>{{ $dis->status->sifat }}</td>
-                        </tr>
-                        <tr>
-                            <th class="bg-body">Isi Disposisi</th>
-                            <td colspan="2">{{ $dis->isi }}</td>
-                        </tr>
-                        <tr>
-                            <th class="bg-body">Catatan</th>
-                            <td colspan="2">{{ $dis->catatan }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
+    </div>
+    <div class="card-body">
+        <hr>
+        <p>{{ $dis->isi }}</p>
+        <small class="text-secondary">Catatan: {{ $dis->catatan }}</small>
+
     </div>
 </div>
 @endforeach
+
+{!! $disposisi->links() !!}
 <!-- / Content -->
 
 @endsection
 
 @push('page-js')
 <script>
+    function _delete(id){
+        const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+        });
 
+        swalWithBootstrapButtons.fire({
+                text: 'Apakah kamu yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus Data',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "{{ url('/surat/suratmasuk/disposisi/destroy') }}" + "/" + id,
+                    type: "POST",
+                    dataType: "JSON",
+                    data:{
+                        _token: "{{ csrf_token() }}",
+                        _method: "POST",
+                    },
+                    success: function(respon){
+                        if(respon.status == 'error'){
+                            swalWithBootstrapButtons.fire(
+                                'Data kamu tetap aman !',
+                                '',
+                                'error'
+                            )
+                        } else if (respon.status == 'success'){
+                            swalWithBootstrapButtons.fire(
+                                'Berhasil menghapus data',
+                                '',
+                                'success'
+                            ).then(function(){
+                                window.location.reload();
+                            });
+                        }
+                    }
+                }) 
+            }
+        })
+    }
 </script>
 @endpush

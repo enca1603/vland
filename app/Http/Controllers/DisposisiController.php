@@ -20,7 +20,7 @@ class DisposisiController extends Controller
 
         $disposisi = Disposisi::with('status')
             ->where('suratmasuk_id', $suratMasuk->id)
-            ->get();
+            ->paginate(5);
 
         // foreach ($disposisi as $dis){
         //     return $dis->status->sifat;
@@ -122,6 +122,13 @@ class DisposisiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Disposisi::where('id', $id)->first();
+
+        try {
+            $data->delete();
+            return response()->json(['status' => 'success', 'msg' => '']);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
     }
 }
