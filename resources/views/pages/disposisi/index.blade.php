@@ -24,23 +24,22 @@
     <div class="col-md">
         <div class="card mb-6">
             <div class="card-header header-elements">
-                <h5 class="mb-0 me-2">Card Header</h5>
-                <div class="card-header-elements">
-                    <span class="badge bg-danger rounded-pill">Hello!</span>
-                </div>
+                <h5 class="mb-0 me-2">Disposisi</h5>
+
                 <div class="card-header-elements ms-auto">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-danger waves-effect waves-light"><i
                                 class="fa fa-trash"></i></button>
-                        <button type="button" class="btn btn-success waves-effect waves-light"><i
-                                class="fa fa-pencil"></i></button>
+                        <a type="button" class="btn btn-success waves-effect waves-light"
+                            href="{{ route('surat.suratmasuk.disposisi.edit', $dis->id) }}"><i
+                                class="fa fa-pencil"></i></a>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="bg-body">
                             <th>Kepada :</th>
                             <th>Tenggat Waktu :</th>
                             <th>Sifat</th>
@@ -49,15 +48,15 @@
                     <tbody>
                         <tr>
                             <td>{{ $dis->kepada }}</td>
-                            <td>{{ $dis->tanggal }}</td>
+                            <td>{{ \Carbon\Carbon::parse($dis->tanggal)->format('d F Y') }}</td>
                             <td>{{ $dis->status->sifat }}</td>
                         </tr>
                         <tr>
-                            <th>Isi Disposisi</th>
+                            <th class="bg-body">Isi Disposisi</th>
                             <td colspan="2">{{ $dis->isi }}</td>
                         </tr>
                         <tr>
-                            <th>Catatan</th>
+                            <th class="bg-body">Catatan</th>
                             <td colspan="2">{{ $dis->catatan }}</td>
                         </tr>
                     </tbody>

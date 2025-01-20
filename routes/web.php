@@ -33,10 +33,12 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/destroy/{id}', [SuratMasukController::class, 'destroy'])->name('surat.suratmasuk.destroy');
             Route::get('/data', [SuratMasukController::class, 'data'])->name('surat.suratmasuk.data');
 
-            Route::prefix('disposisi')->group(function(){
+            Route::prefix('disposisi')->group(function () {
                 Route::get('/{suratMasuk}', [DisposisiController::class, 'index'])->name('surat.suratmasuk.disposisi.index');
                 Route::get('/{suratMasuk}/create', [DisposisiController::class, 'create'])->name('surat.suratmasuk.disposisi.create');
                 Route::post('/{suratMasuk}', [DisposisiController::class, 'store'])->name('surat.suratmasuk.disposisi.store');
+                Route::get('/{id}/edit', [DisposisiController::class, 'edit'])->name('surat.suratmasuk.disposisi.edit');
+                Route::put('/{id}/update', [DisposisiController::class, 'update'])->name('surat.suratmasuk.disposisi.update');
             });
         });
 

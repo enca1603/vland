@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Disposisi extends Model
 {
     use HasUuids;
-    
+
     protected $table = 'disposisi';
     protected $guarded = [''];
 
-    public function surat_masuk()
+    public function surat_masuk(): BelongsTo
     {
-        return $this->hasMany(SuratMasuk::class);
+        return $this->belongsTo(SuratMasuk::class, 'suratmasuk_id', 'id');
     }
 
     public function status(): BelongsTo
     {
-        return $this->belongsTo(Sifat::class, 'sifat_id','id');
+        return $this->belongsTo(Sifat::class, 'sifat_id', 'id');
     }
 }

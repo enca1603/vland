@@ -17,16 +17,16 @@ class DisposisiController extends Controller
      */
     public function index(SuratMasuk $suratMasuk)
     {
-        
+
         $disposisi = Disposisi::with('status')
-        ->where('suratmasuk_id', $suratMasuk->id)
-        ->get();
-        
+            ->where('suratmasuk_id', $suratMasuk->id)
+            ->get();
+
         // foreach ($disposisi as $dis){
         //     return $dis->status->sifat;
         // }
 
-        return view('pages.disposisi.index', compact('suratMasuk','disposisi'));
+        return view('pages.disposisi.index', compact('suratMasuk', 'disposisi'));
     }
 
     /**
@@ -38,7 +38,7 @@ class DisposisiController extends Controller
         $sifat = Sifat::all();
         $surat = $suratMasuk;
 
-        return view('pages.disposisi.create', compact('sifat','surat'));
+        return view('pages.disposisi.create', compact('sifat', 'surat'));
     }
 
     /**
@@ -82,7 +82,12 @@ class DisposisiController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Disposisi::with('surat_masuk', 'status')
+            ->where('id', $id)
+            ->first();
+        $sifat = Sifat::all();
+
+        return view('pages.disposisi.edit', compact('data', 'sifat'));
     }
 
     /**
@@ -90,7 +95,26 @@ class DisposisiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'kepada' => 'required',
+            'tanggal' => 'required',
+            'isi' => 'required',
+            'sifat_id' => 'required'
+        ]);
+
+        try {
+            $disp = Disposisi::where('id', $id)->first();
+            $disp->kepada = $request->kepada;
+            $disp->tanggal = Carbon::createFromFormat('d-m-Y', $request->tanggal)->format('Y-m-d');
+            $disp->isi = $request->isi;
+            $disp->catatan = $request->catatan;
+            $disp->sifat_id = $request->sifat_id;
+            $disp->save();
+            return redirect()->route('surat.suratmasuk.disposisi.index', $disp->suratmasuk_id)->with('success', 'Data berhasil di simpan');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('error', $th->getMessage());
+        }
     }
 
     /**

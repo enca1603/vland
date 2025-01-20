@@ -17,8 +17,8 @@ class SuratMasuk extends Model
         return $this->belongsTo(Klasifikasi::class);
     }
 
-    public function disposisi()
+    public function disposisis()
     {
-        return $this->belongsTo(Disposisi::class);
+        return $this->hasMany(Disposisi::class);
     }
 }
