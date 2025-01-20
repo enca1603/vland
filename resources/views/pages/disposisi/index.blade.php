@@ -22,32 +22,46 @@
 @foreach ($disposisi as $dis)
 <div class="row mb-2">
     <div class="col-md">
-        <div class="card h-100">
-            <div class="card-header d-flex justify-content-between">
-                <div>
-                    <h5 class="card-title mb-2">Kepada : <span class="text-bold">{{ $dis->kepada }}</span>
-                        <span class="badge bg-danger rounded-pill">{{ $dis->status->sifat }}</span>
-                    </h5>
-                    <span class="text-muted">Tenggat Waktu</span>
-                    <span class="text-muted">{{ $dis->tanggal }}</span>
+        <div class="card mb-6">
+            <div class="card-header header-elements">
+                <h5 class="mb-0 me-2">Card Header</h5>
+                <div class="card-header-elements">
+                    <span class="badge bg-danger rounded-pill">Hello!</span>
                 </div>
-
-
-                <div class="btn-group">
-                    <button type="button"
-                        class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light"
-                        data-bs-toggle="dropdown"></button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Action</a>
-                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Another action</a>
-                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item waves-effect" href="javascript:void(0)">Separated link</a>
+                <div class="card-header-elements ms-auto">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger waves-effect waves-light"><i
+                                class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-success waves-effect waves-light"><i
+                                class="fa fa-pencil"></i></button>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Kepada :</th>
+                            <th>Tenggat Waktu :</th>
+                            <th>Sifat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $dis->kepada }}</td>
+                            <td>{{ $dis->tanggal }}</td>
+                            <td>{{ $dis->status->sifat }}</td>
+                        </tr>
+                        <tr>
+                            <th>Isi Disposisi</th>
+                            <td colspan="2">{{ $dis->isi }}</td>
+                        </tr>
+                        <tr>
+                            <th>Catatan</th>
+                            <td colspan="2">{{ $dis->catatan }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
