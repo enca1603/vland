@@ -40,7 +40,8 @@
                         <i class="ti ti-dots-vertical ti-md text-muted"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId">
-                        <a class="dropdown-item" href="javascript:void(0);">Print</a>
+                        <a class="dropdown-item" href="{{ route('surat.suratmasuk.disposisi.cetak', $dis->id) }}"
+                            target="_blank" media=print>Print</a>
                         <a class="dropdown-item"
                             href="{{ route('surat.suratmasuk.disposisi.edit', $dis->id) }}">Edit</a>
                         <a class="dropdown-item" href="javascript:void(0);"

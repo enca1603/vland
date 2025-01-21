@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/{id}/edit', [DisposisiController::class, 'edit'])->name('surat.suratmasuk.disposisi.edit');
                 Route::put('/{id}/update', [DisposisiController::class, 'update'])->name('surat.suratmasuk.disposisi.update');
                 Route::post('/destroy/{id}', [DisposisiController::class, 'destroy'])->name('surat.suratmasuk.disposisi.destroy');
+
+                Route::get('/cetak/{id}', [DisposisiController::class, 'cetak'])->name('surat.suratmasuk.disposisi.cetak');
             });
         });
 

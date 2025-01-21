@@ -131,4 +131,13 @@ class DisposisiController extends Controller
             dd($th->getMessage());
         }
     }
+
+    public function cetak(string $id)
+    {
+        $data = Disposisi::with('surat_masuk', 'status')
+            ->where('id', $id)
+            ->first();
+
+        return view('pages.disposisi.cetak', compact('data'));
+    }
 }
