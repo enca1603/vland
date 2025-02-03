@@ -15,7 +15,18 @@
             <a type="button" href="{{ route('surat.suratmasuk.index') }}" class="btn btn-danger">Kembali</a>
         </div>
     </div>
-    <div class="alert alert-primary" role="alert">Disposi Surat Nomor : <strong>{{ $suratMasuk->no_surat }}</strong>
+    <div class="alert alert-primary" role="alert">
+        <table class="table table-borderless mb-0">
+            <tr>
+                <th style="width: 15%">Disposisi Surat</th>
+                <td>{{ $suratMasuk->no_surat }}</td>
+            </tr>
+            <tr>
+                <th style="width: 15%">Tanggal Surat</th>
+                <td>{{ $suratMasuk->tgl_surat }}</td>
+            </tr>
+        </table>
+        </strong>
     </div>
 </div>
 
@@ -41,7 +52,7 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId">
                         <a class="dropdown-item" href="{{ route('surat.suratmasuk.disposisi.cetak', $dis->id) }}"
-                            target="_blank" media=print>Print</a>
+                            target="_blank">Print</a>
                         <a class="dropdown-item"
                             href="{{ route('surat.suratmasuk.disposisi.edit', $dis->id) }}">Edit</a>
                         <a class="dropdown-item" href="javascript:void(0);"

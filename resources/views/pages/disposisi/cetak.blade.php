@@ -6,7 +6,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title></title>
+    <title>Lembar Disposisi</title>
 
     <meta name="description" content="" />
 
@@ -44,30 +44,77 @@
 
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('') }}assets/js/config.js"></script>
+
+    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+
+    <style>
+        .content {
+            width: 210mm;
+            padding: 20px
+        }
+
+        @media print {
+            @page {
+                width: 210mm;
+                height: 297mm;
+                margin: 3mm
+            }
+        }
+    </style>
+
+    <script>
+        $(function(){
+            window.print();
+            window.onafterprint = function(){
+                setTimeOut(function(){
+                    window.close()
+                }, 1000)
+            }
+        })
+    </script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="text-center mb-6">
-            <h4 class="mb-0">Disposisi</h4>
-            <p class=" text-black">Nomor Surat : {{ $data->surat_masuk->no_surat }}</p>
-        </div>
-        <table class="table">
+    <div class="content">
+
+        <table class="table table-bordered">
             <tbody>
                 <tr>
-                    <td>Tujuan</td>
-                    <td style="width: 2%">:</td>
-                    <td>{{ $data->kepada }}</td>
+                    <td colspan="4" class="text-center fw-bold">LEMBAR DISPOSISI</td>
                 </tr>
                 <tr>
-                    <td>Tenggat Waktu</td>
-                    <td style="width: 2%">:</td>
-                    <td>{{ $data->getFormatTanggal() }}</td>
+                    <td>Dari</td>
+                    <td> {{ $data->surat_masuk->pengirim }}</td>
+                    <td>Tgl Diterima:</td>
+                    <td> {{ $data->surat_masuk->tgl_terima }}</td>
                 </tr>
                 <tr>
-                    <td>Isi Disposisi</td>
-                    <td style="width: 2%">:</td>
-                    <td>{{ $data->isi }}</td>
+                    <td>No. Surat</td>
+                    <td> {{ $data->surat_masuk->no_surat }}</td>
+                    <td>No. Agenda:</td>
+                    <td> {{ $data->surat_masuk->no_agenda }}</td>
+                </tr>
+                <tr>
+                    <td>Tgl.Surat</td>
+                    <td> {{ $data->surat_masuk->tgl_surat }}</td>
+                    <td>Sifat</td>
+                    <td> {{ $data->status->sifat }}</td>
+                </tr>
+                <tr>
+                    <td>Prihal</td>
+                    <td colspan="3">{{ $data->surat_masuk->prihal }}</td>
+                </tr>
+                <tr>
+                    <td>Diteruskan Kepada</td>
+                    <td colspan="3"> {{ $data->kepada }}</td>
+                </tr>
+                <tr>
+                    <th>isi Disposisi</th>
+                    <td colspan="3">{{ $data->isi }}</td>
+                </tr>
+                <tr>
+                    <td>Catatan</td>
+                    <td colspan="3">{{ $data->catatan }}</td>
                 </tr>
             </tbody>
         </table>
@@ -75,9 +122,3 @@
 </body>
 
 </html>
-
-<script>
-    $(function(){
-        window.print()
-    })
-</script>
