@@ -59,25 +59,24 @@
             </ul>
         </li>
 
-        {{-- <li class="menu-item {{ \Illuminate\Support\Facades\Route::is('surat.*') ? 'open' : '' }}" style="">
+        <li class="menu-item" style="">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-truck"></i>
                 <div data-i18n="Logistics">Buku Agenda</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ \Illuminate\Support\Facades\Route::is('surat.suratmasuk.*') ? 'active' : '' }}">
+                <li class="menu-item">
                     <a href="{{ route('surat.suratmasuk.index') }}" class="menu-link">
                         <div data-i18n="Incoming">Surat Masuk</div>
                     </a>
                 </li>
-                <li
-                    class="menu-item {{ \Illuminate\Support\Facades\Route::is('surat.suratkeluar.*') ? 'active' : '' }}">
+                <li class="menu-item">
                     <a href="{{ route('surat.suratkeluar.index') }}" class="menu-link">
                         <div data-i18n="Outgoing">Surat Keluar</div>
                     </a>
                 </li>
             </ul>
-        </li> --}}
+        </li>
 
         <li class="menu-header small">
             <span class="menu-header-text" data-i18n="Apps &amp; Reference">Referensi</span>
