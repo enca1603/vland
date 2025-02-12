@@ -42,7 +42,7 @@
         <li class="menu-item {{ \Illuminate\Support\Facades\Route::is('surat.*') ? 'open' : '' }}" style="">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-truck"></i>
-                <div data-i18n="Logistics">Surat</div>
+                <div data-i18n="Logistics">Transaksi Surat</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ \Illuminate\Support\Facades\Route::is('surat.suratmasuk.*') ? 'active' : '' }}">
@@ -59,20 +59,21 @@
             </ul>
         </li>
 
-        <li class="menu-item" style="">
+        <li class="menu-item {{ \Illuminate\Support\Facades\Route::is('agenda.*') ? 'open' : '' }}" style="">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-truck"></i>
                 <div data-i18n="Logistics">Buku Agenda</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{ route('surat.suratmasuk.index') }}" class="menu-link">
-                        <div data-i18n="Incoming">Surat Masuk</div>
+                <li
+                    class="menu-item {{ \Illuminate\Support\Facades\Route::is('agenda.agendamasuk.*') ? 'active' : '' }}">
+                    <a href="{{ route('agenda.agendamasuk.index') }}" class="menu-link">
+                        <div data-i18n="Incoming">Agenda Surat Masuk</div>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="{{ route('surat.suratkeluar.index') }}" class="menu-link">
-                        <div data-i18n="Outgoing">Surat Keluar</div>
+                        <div data-i18n="Outgoing">Agenda Surat Keluar</div>
                     </a>
                 </li>
             </ul>

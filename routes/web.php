@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgendaMasukController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\KlasifikasiController;
@@ -54,6 +55,15 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/hapus_lampiran/{id}', [SuratKeluarController::class, 'hapus_lampiran'])->name('surat.suratkeluar.hapus_lampiran');
             Route::post('/destroy/{id}', [SuratKeluarController::class, 'destroy'])->name('surat.suratkeluar.destroy');
             Route::get('/data', [SuratKeluarController::class, 'data'])->name('surat.suratkeluar.data');
+        });
+    });
+
+    Route::prefix('agende')->group(function () {
+        Route::prefix('agendamasuk')->group(function () {
+            Route::get('/', [AgendaMasukController::class, 'index'])->name('agenda.agendamasuk.index');
+        });
+        Route::prefix('agendakeluar')->group(function () {
+            // 
         });
     });
 });
