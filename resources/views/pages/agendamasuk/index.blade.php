@@ -47,52 +47,10 @@
         });
     })
 
-    function _delete(id){
-        const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: true
-        });
-
-        swalWithBootstrapButtons.fire({
-                text: 'Apakah kamu yakin ingin menghapus data ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Hapus Data',
-                cancelButtonText: 'Batal',
-                reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "{{ url('/surat/suratmasuk/destroy') }}" + "/" + id,
-                    type: "POST",
-                    dataType: "JSON",
-                    data:{
-                        _token: "{{ csrf_token() }}",
-                        _method: "POST",
-                    },
-                    success: function(respon){
-                        if(respon.status == 'error'){
-                            swalWithBootstrapButtons.fire(
-                                'Data kamu tetap aman !',
-                                '',
-                                'error'
-                            )
-                        } else if (respon.status == 'success'){
-                            swalWithBootstrapButtons.fire(
-                                'Berhasil menghapus data',
-                                '',
-                                'success'
-                            ).then(function(){
-                                table.ajax.reload(null, false);
-                            });
-                        }
-                    }
-                }) 
-            }
-        })
+    function detail(id)
+    {
+        console.log(id);
+        
     }
 </script>
 @endpush

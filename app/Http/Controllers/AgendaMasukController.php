@@ -38,7 +38,7 @@ class AgendaMasukController extends Controller
             })
             ->addColumn('aksi', function ($row) {
                 return '
-                    <button type="button" class="btn btn-sm btn-info" onclick="lihat(' . "'" . asset('app/incoming/' . $row->lampiran) . "'" . ')">Lihat</button>
+                    <button type="button" class="btn btn-sm btn-info" onclick="detail(' . "'" . $row->id . "'" . ')">Detail</button>
                     ';
             })
             ->rawColumns(['lampiran', 'aksi'])
