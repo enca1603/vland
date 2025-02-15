@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('agende')->group(function () {
         Route::prefix('agendamasuk')->group(function () {
             Route::get('/', [AgendaMasukController::class, 'index'])->name('agenda.agendamasuk.index');
+            Route::get('/data', [AgendaMasukController::class, 'data'])->name('agenda.agendamasuk.data');
         });
         Route::prefix('agendakeluar')->group(function () {
             // 
