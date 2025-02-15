@@ -47,10 +47,16 @@
         });
     })
 
-    function detail(id)
-    {
-        console.log(id);
-        
-    }
+    // function detail(id)
+    // {
+    //     $.ajax({
+    //         url: "{{ url('/agenda/agendamasuk/detail') }}" + '/' + id,
+    //         type: "GET",
+    //         dataType: "JSON",
+    //         success: function(respon){
+    //             console.log(respon);
+    //         }
+    //     });
+    // }
 </script>
 @endpush

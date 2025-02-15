@@ -16,6 +16,12 @@ class AgendaMasukController extends Controller
         return view('pages.agendamasuk.index');
     }
 
+    public function detail($id)
+    {
+        $masuks = SuratMasuk::with('klasifikasi')->where('id', $id)->first();
+        return $masuks;
+    }
+
     public function data()
     {
         $datas = SuratMasuk::with('klasifikasi')->get();
@@ -38,7 +44,7 @@ class AgendaMasukController extends Controller
             })
             ->addColumn('aksi', function ($row) {
                 return '
-                    <button type="button" class="btn btn-sm btn-info" onclick="detail(' . "'" . $row->id . "'" . ')">Detail</button>
+                    <a  type="button" class="btn btn-sm btn-info" href="' . route('agenda.agendamasuk.detail', $row->id) . '">Detail</a>
                     ';
             })
             ->rawColumns(['lampiran', 'aksi'])
