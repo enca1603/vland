@@ -150,6 +150,12 @@ class SuratMasukController extends Controller
         }
     }
 
+    public function detail($id)
+    {
+        $data = SuratMasuk::with('klasifikasi')->where('id', $id)->first();
+        return view('pages.suratmasuk.detail', compact('data'));
+    }
+
     public function data()
     {
         $datas = SuratMasuk::with('klasifikasi')->get();
@@ -182,6 +188,7 @@ class SuratMasukController extends Controller
                     </button>
 
                     <ul class="dropdown-menu" style="">
+                        <li><a class="dropdown-item waves-effect" href="' . route('surat.suratmasuk.detail', $row->id) . '">Detail</a></li>
                         <li><a class="dropdown-item waves-effect" href="' . route('surat.suratmasuk.edit', $row->id) . '">Edit</a></li>
                         <li><a class="dropdown-item waves-effect" href="javascript:void(0);" onclick="_delete(' . "'" . $row->id . "'" . ')">Hapus</a></li>
                     </ul>

@@ -3,8 +3,20 @@
 @section('content')
 <!-- Content -->
 
-<h4 class="py-4 mb-6">Surat Masuk</h4>
+<h4 class="py-4 mb-6">Agenda Surat Masuk</h4>
 <div class="card">
+    <div class="card-header">
+        <div class="row">
+            <label for="filer" class="col-md-2 col-form-label">Saring Tanggal Surat</label>
+            <div class="col-md-4">
+                <input class="form-control" type="text" id="filer" name="filter">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary" id="_btnFilter">Filter</button>
+            </div>
+        </div>
+    </div>
+    <hr>
     <div class="card-datatable table-responsive">
         <table id="datatable" class="table">
             <thead>
@@ -27,7 +39,7 @@
 @push('page-js')
 <script>
     var table;
-
+    var awal, akhir;
     $(function(){
         table = $('#datatable').DataTable({
             serverSide: true,
@@ -45,18 +57,21 @@
             ],
             autoWidth: false,
         });
+
+        $('input[name="filter"]').daterangepicker({
+            opens: 'left',
+            locale: {
+                format: 'DD-MM-YYYY'
+            }
+        }, function(start, end, label) {
+            awal = start.format('DD-MM-YYYY');
+            akhir = end.format('DD-MM-YYYY');
+        });
     })
 
-    // function detail(id)
-    // {
-    //     $.ajax({
-    //         url: "{{ url('/agenda/agendamasuk/detail') }}" + '/' + id,
-    //         type: "GET",
-    //         dataType: "JSON",
-    //         success: function(respon){
-    //             console.log(respon);
-    //         }
-    //     });
-    // }
+    $('#_btnFilter').on('click', function(){
+        console.log(awal + ' s.d. ' + akhir);
+        
+    });
 </script>
 @endpush
