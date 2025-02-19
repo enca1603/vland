@@ -11,8 +11,9 @@
             <div class="col-md-4">
                 <input class="form-control" type="text" id="filer" name="filter">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <button class="btn btn-primary" id="_btnFilter">Filter</button>
+                <button class="btn btn-primary" id="_btnClear">Clear</button>
             </div>
         </div>
     </div>
@@ -45,7 +46,11 @@
             serverSide: true,
             processing: true,
             ajax:{
-                url: "{{ route('agenda.agendamasuk.data') }}"
+                url: "{{ route('agenda.agendamasuk.data') }}",
+                data: function(d){
+                    d.awal = awal;
+                    d.akhir = akhir;
+                }
             },
             columns:[
                 {data: "no_agenda"},
@@ -70,8 +75,13 @@
     })
 
     $('#_btnFilter').on('click', function(){
-        console.log(awal + ' s.d. ' + akhir);
-        
+        // console.log(awal + ' s.d. ' + akhir);
+        table.draw();
+    });
+
+    $('#_btnClear').on('click', function(){
+        $('input[name="filter"]').daterangepicker()
+        table.ajax.reload();
     });
 </script>
 @endpush
