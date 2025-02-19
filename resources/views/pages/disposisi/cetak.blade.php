@@ -76,7 +76,6 @@
 
 <body>
     <div class="content">
-
         <table class="table table-bordered">
             <tbody>
                 <tr>
