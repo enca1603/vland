@@ -10,21 +10,24 @@
     <div class="card-header">
         <h5 class="card-title">Filter</h5>
         <div class="row">
-            <div class="col-md-4 col-12">
+            <div class="col-md-4 col-12 mb-2">
                 <label for="dt_awal" class="form-label">Tgl. Awal</label>
-                <input type="text" id="dt_awal" name="dt_awal" placeholder="MM/DD/YYYY" class="form-control">
+                <input type="text" id="dt_awal" name="dt_awal" placeholder="dd-mm-yyyy" autocomplete="off"
+                    class="form-control input_filter_tgl">
             </div>
-            <div class="col-md-4 col-12">
+            <div class="col-md-4 col-12 mb-2">
                 <label for="dt_akhir" class="form-label">Tgl. Akhir</label>
-                <input type="text" id="dt_akhir" name="dt_akhir" placeholder="MM/DD/YYYY" class="form-control">
+                <input type="text" id="dt_akhir" name="dt_akhir" placeholder="dd-mm-yyyy" autocomplete="off"
+                    class="form-control input_filter_tgl">
             </div>
-            <div class="col-md-4 col-12 pt-6">
+            <div class="col-md-4 col-12 pt-6 mb-0">
                 <button id="btnFilter" class="btn btn-primary">Filter</button>
                 <button id="btnReset" class="btn btn-danger">Reset</button>
+                <button id="btnPrint" class="btn btn-info">Print</button>
             </div>
         </div>
     </div>
-    <hr>
+
     <div class="card-datatable table-responsive">
         <table id="datatable" class="table">
             <thead>
@@ -49,14 +52,25 @@
     var table;
     var awal, akhir;
     $(function(){
+        $('.input_filter_tgl').datepicker({
+            todayBtn: 'linked',
+            autoclose: true,
+            format: 'dd-mm-yyyy'
+        });
+
+        load_data();
+    });
+
+    function load_data(star_date = '', end_date = '')
+    {
         table = $('#datatable').DataTable({
             serverSide: true,
             processing: true,
             ajax:{
                 url: "{{ route('agenda.agendamasuk.data') }}",
                 data: function(d){
-                    d.awal = awal;
-                    d.akhir = akhir;
+                    d.awal = star_date;
+                    d.akhir = end_date;
                 }
             },
             columns:[
@@ -69,18 +83,26 @@
             ],
             autoWidth: false,
         });
+    }
 
-        $('#dt_awal, #dt_akhir').datepicker();
-    })
-
-    $('#dt_awal, #dt_akhir').on('change', function(){
+    $('#btnFilter').on('click', function(){
         awal = $('#dt_awal').val();
         akhir = $('#dt_akhir').val();
-    })
 
-    $('#btnfilter').on('click', function(){
-        table.draw();
+        if(awal != '' && akhir != '')
+        {
+            table.destroy();
+            load_data(awal, akhir);
+        } else {
+            alert('Kosong')
+        }
     });
 
+    $('#btnReset').on('click', function(){
+        $('#dt_awal').val('');
+        $('#dt_akhir').val('');
+        table.destroy();
+        load_data();
+    });
 </script>
 @endpush

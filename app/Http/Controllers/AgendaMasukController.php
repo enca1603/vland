@@ -18,17 +18,16 @@ class AgendaMasukController extends Controller
 
     public function data(Request $request)
     {
-        // $dAwal = Carbon::createFromFormat('d-m-Y', $request->awal)->format('Y-m-d');
-        // $dAkhir = Carbon::createFromFormat('d-m-Y', $request->akhir)->format('Y-m-d');
-
         if ($request->ajax()) {
-            $datas = SuratMasuk::with('klasifikasi')->get();
-            if ($request->filled('awal') && $request->filled('akhir')) {
-                $datas = SuratMasuk::with('klasifikasi')
-                    ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $request->awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $request->akhir)->format('Y-m-d')]);
+            if (!empty($request->awal)) {
+                $data = SuratMasuk::with('klasifikasi')
+                    ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $request->awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $request->akhir)->format('Y-m-d')])
+                    ->get();
+            } else {
+                $data = SuratMasuk::with('klasifikasi')->get();
             }
 
-            return DataTables::of($datas)
+            return DataTables::of($data)
                 ->addColumn('tgl_surat', function ($row) {
                     return Carbon::parse($row->tgl_surat)->format('d-m-Y');
                 })
@@ -38,19 +37,55 @@ class AgendaMasukController extends Controller
                 ->addColumn('lampiran', function ($row) {
                     if ($row->lampiran) {
                         return '
-                    <button type="button" class="btn btn-sm btn-info" onclick="lihat(' . "'" . asset('app/incoming/' . $row->lampiran) . "'" . ')">Lihat</button>
-                    ';
+                <button type="button" class="btn btn-sm btn-info" onclick="lihat(' . "'" . asset('app/incoming/' . $row->lampiran) . "'" . ')">Lihat</button>
+                ';
                     } else {
                         return '<span class="text-sm">No File</span>';
                     }
                 })
                 ->addColumn('aksi', function ($row) {
                     return '
-                    <a  type="button" class="btn btn-sm btn-info" href="' . route('surat.suratmasuk.detail', $row->id) . '">Detail</a>
-                    ';
+                <a  type="button" class="btn btn-sm btn-info" href="' . route('surat.suratmasuk.detail', $row->id) . '">Detail</a>
+                ';
                 })
                 ->rawColumns(['lampiran', 'aksi'])
                 ->make(true);
         }
     }
+
+    // NOTE:
+    // $dAwal = Carbon::createFromFormat('d-m-Y', $request->awal)->format('Y-m-d');
+    // $dAkhir = Carbon::createFromFormat('d-m-Y', $request->akhir)->format('Y-m-d');
+
+    // if ($request->ajax()) {
+    //     $datas = SuratMasuk::with('klasifikasi')->get();
+    //     if ($request->filled('awal') && $request->filled('akhir')) {
+    //         $datas = SuratMasuk::with('klasifikasi')
+    //             ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $request->awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $request->akhir)->format('Y-m-d')]);
+    //     }
+
+    //     return DataTables::of($datas)
+    //         ->addColumn('tgl_surat', function ($row) {
+    //             return Carbon::parse($row->tgl_surat)->format('d-m-Y');
+    //         })
+    //         ->addColumn('tgl_terima', function ($row) {
+    //             return Carbon::parse($row->tgl_terima)->format('d-m-Y');
+    //         })
+    //         ->addColumn('lampiran', function ($row) {
+    //             if ($row->lampiran) {
+    //                 return '
+    //             <button type="button" class="btn btn-sm btn-info" onclick="lihat(' . "'" . asset('app/incoming/' . $row->lampiran) . "'" . ')">Lihat</button>
+    //             ';
+    //             } else {
+    //                 return '<span class="text-sm">No File</span>';
+    //             }
+    //         })
+    //         ->addColumn('aksi', function ($row) {
+    //             return '
+    //             <a  type="button" class="btn btn-sm btn-info" href="' . route('surat.suratmasuk.detail', $row->id) . '">Detail</a>
+    //             ';
+    //         })
+    //         ->rawColumns(['lampiran', 'aksi'])
+    //         ->make(true);
+    // }
 }
