@@ -10,20 +10,21 @@
     <div class="card-header">
         <h5 class="card-title">Filter</h5>
         <div class="row">
-            <div class="col-md-4 col-12 mb-2">
+            <div class="col-md-3 col-12 mb-2">
                 <label for="dt_awal" class="form-label">Tgl. Awal</label>
                 <input type="text" id="dt_awal" name="dt_awal" placeholder="dd-mm-yyyy" autocomplete="off"
                     class="form-control input_filter_tgl">
             </div>
-            <div class="col-md-4 col-12 mb-2">
+            <div class="col-md-3 col-12 mb-2">
                 <label for="dt_akhir" class="form-label">Tgl. Akhir</label>
                 <input type="text" id="dt_akhir" name="dt_akhir" placeholder="dd-mm-yyyy" autocomplete="off"
                     class="form-control input_filter_tgl">
             </div>
-            <div class="col-md-4 col-12 pt-6 mb-0">
+            <div class="col-md-6 col-12 pt-6 mb-0">
                 <button id="btnFilter" class="btn btn-primary">Filter</button>
                 <button id="btnReset" class="btn btn-danger">Reset</button>
-                <button id="btnPrint" class="btn btn-info">Print</button>
+                <button id="btnPrint" class="btn btn-info"><i class="fa fa-print"></i></button>
+                <button id="btnPdf" class="btn btn-info"><i class="fa fa-file-pdf"></i></button>
             </div>
         </div>
     </div>
@@ -94,7 +95,7 @@
             table.destroy();
             load_data(awal, akhir);
         } else {
-            alert('Kosong')
+            alert('Warning : Tanggal filter kosong')
         }
     });
 
@@ -104,5 +105,25 @@
         table.destroy();
         load_data();
     });
+
+    $('#btnPrint').on('click', function(){
+        awal = $('#dt_awal').val();
+        akhir = $('#dt_akhir').val();
+
+        $.ajax({
+            url: "{{ route('agenda.agendamasuk.print') }}",
+            type:"POST",
+            dataType: "JSON",
+            data:{
+                _token: "{{ csrf_token() }}",
+                _method: "POST",
+                awal: awal,
+                akhir: akhir
+            },
+            success: function(respon){
+                window.open("{{ url('/agenda/agendamasuk/cetak?data=') }}"+`${respon}`, "_blank")
+            }
+        })
+    })
 </script>
 @endpush
