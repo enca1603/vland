@@ -46,6 +46,7 @@
     <!-- Page CSS -->
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}">
 
     <!-- Helpers -->
     <script src="{{ asset('') }}assets/vendor/js/helpers.js"></script>
@@ -212,6 +213,7 @@
     <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
 
     <!-- Main JS -->
     <script src="{{ asset('') }}assets/js/main.js"></script>

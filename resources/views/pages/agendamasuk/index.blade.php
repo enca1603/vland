@@ -1,19 +1,26 @@
 @extends('layouts.admin',['title' => 'Agenda Surat Masuk'])
 
+
+
 @section('content')
 <!-- Content -->
 
 <h4 class="py-4 mb-6">Agenda Surat Masuk</h4>
 <div class="card">
     <div class="card-header">
+        <h5 class="card-title">Filter</h5>
         <div class="row">
-            <label for="filer" class="col-md-2 col-form-label">Saring Tanggal Surat</label>
-            <div class="col-md-4">
-                <input class="form-control" type="text" id="filer" name="filter">
+            <div class="col-md-4 col-12">
+                <label for="dt_awal" class="form-label">Tgl. Awal</label>
+                <input type="text" id="dt_awal" name="dt_awal" placeholder="MM/DD/YYYY" class="form-control">
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-primary" id="_btnFilter">Filter</button>
-                <button class="btn btn-primary" id="_btnClear">Clear</button>
+            <div class="col-md-4 col-12">
+                <label for="dt_akhir" class="form-label">Tgl. Akhir</label>
+                <input type="text" id="dt_akhir" name="dt_akhir" placeholder="MM/DD/YYYY" class="form-control">
+            </div>
+            <div class="col-md-4 col-12 pt-6">
+                <button id="btnFilter" class="btn btn-primary">Filter</button>
+                <button id="btnReset" class="btn btn-danger">Reset</button>
             </div>
         </div>
     </div>
@@ -63,25 +70,17 @@
             autoWidth: false,
         });
 
-        $('input[name="filter"]').daterangepicker({
-            opens: 'left',
-            locale: {
-                format: 'DD-MM-YYYY'
-            }
-        }, function(start, end, label) {
-            awal = start.format('DD-MM-YYYY');
-            akhir = end.format('DD-MM-YYYY');
-        });
+        $('#dt_awal, #dt_akhir').datepicker();
     })
 
-    $('#_btnFilter').on('click', function(){
-        // console.log(awal + ' s.d. ' + akhir);
+    $('#dt_awal, #dt_akhir').on('change', function(){
+        awal = $('#dt_awal').val();
+        akhir = $('#dt_akhir').val();
+    })
+
+    $('#btnfilter').on('click', function(){
         table.draw();
     });
 
-    $('#_btnClear').on('click', function(){
-        $('input[name="filter"]').daterangepicker()
-        table.ajax.reload();
-    });
 </script>
 @endpush
