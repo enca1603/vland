@@ -23,7 +23,9 @@
             <div class="col-md-6 col-12 pt-6 mb-0">
                 <button id="btnFilter" class="btn btn-primary">Filter</button>
                 <button id="btnReset" class="btn btn-danger">Reset</button>
-                <button id="btnPrint" class="btn btn-info"><i class="fa fa-print"></i></button>
+                {{-- <a type="button" href=""
+                    onclick="this.href='/agenda/agendamasuk/cetak-per-tanggal/'+document.getElementById('dt_awal').value+'&'+document.getElementById('dt_akhir').value"
+                    id="btnPrint" class="btn btn-info" target="_blank"><i class="fa fa-print"></i></a> --}}
                 <button id="btnPdf" class="btn btn-info"><i class="fa fa-file-pdf"></i></button>
             </div>
         </div>
@@ -106,7 +108,7 @@
         load_data();
     });
 
-    $('#btnPrint').on('click', function(){
+    $('#btnPdf').on('click', function(){
         awal = $('#dt_awal').val();
         akhir = $('#dt_akhir').val();
 
@@ -121,7 +123,7 @@
                 akhir: akhir
             },
             success: function(respon){
-                window.open("{{ url('/agenda/agendamasuk/cetak?data=') }}"+`${respon}`, "_blank")
+                console.log(respon);
             }
         })
     })

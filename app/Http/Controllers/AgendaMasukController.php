@@ -63,11 +63,26 @@ class AgendaMasukController extends Controller
             $data = SuratMasuk::with('klasifikasi')->get();
         }
 
-        return response()->json($data);
+        return view('pages.suratmasuk.cetak', compact('data'));
     }
 
-    public function cetak()
+    public function cetakpertanggal($awal = '', $akhir = '')
     {
-        return view('pages.suratmasuk.cetak');
+        // if ($awal && $akhir) {
+        //     $data = SuratMasuk::with('klasifikasi')
+        //         ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $akhir)->format('Y-m-d')])
+        //         ->get();
+        // } else {
+        //     $data = SuratMasuk::with('klasifikasi')->get();
+        // }
+
+
+
+
+        $data = SuratMasuk::with('klasifikasi')->get();
+        if ($awal = '' or $awal = '') {
+        }
+
+        return $data;
     }
 }

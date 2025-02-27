@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [AgendaMasukController::class, 'index'])->name('agenda.agendamasuk.index');
             Route::get('/data', [AgendaMasukController::class, 'data'])->name('agenda.agendamasuk.data');
             Route::post('/print', [AgendaMasukController::class, 'print'])->name('agenda.agendamasuk.print');
-            Route::get('/cetak', [AgendaMasukController::class, 'cetak'])->name('agenda.agendamasuk.cetak');
+            Route::get('/cetak-per-tanggal/{awal}&{akhir}', [AgendaMasukController::class, 'cetakpertanggal'])->name('agenda.agendamasuk.cetakpertanggal');
         });
         Route::prefix('agendakeluar')->group(function () {
             // 
