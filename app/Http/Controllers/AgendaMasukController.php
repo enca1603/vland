@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Disposisi;
-use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\Facades\DataTables;
 
 class AgendaMasukController extends Controller
@@ -76,9 +74,22 @@ class AgendaMasukController extends Controller
         } else {
             $data = SuratMasuk::with('klasifikasi')->get();
         }
-        // return view('pages.suratmasuk.cetak');
-        $pdf = Pdf::loadView('pages.suratmasuk.cetak', compact('data'))->setOptions(['defaultFont' => 'sans-serif']);
-        $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream('SuratMasuk.pdf');
+        return view('pages.suratmasuk.dompdf', [
+            'data' => $data,
+            'awal' => $request->dt_awal,
+            'akhir' => $request->dt_akhir
+        ]);
+        // $pdf = Pdf::loadView('pages.suratmasuk.dompdf', [
+        //     'data' => $data,
+        //     'awal' => $request->dt_awal,
+        //     'akhir' => $request->dt_akhir
+        // ])->setOptions(['defaultFont' => 'sans-serif']);
+        // $pdf->setPaper('A4', 'landscape');
+        // $pdf->setOption([
+        //     'isRemoteEnabled' => true,
+        //     'isHtml5ParserEnabled' => true
+        // ]);
+        // $pdf->render();
+        // return $pdf->stream('SuratMasuk.pdf');
     }
 }
