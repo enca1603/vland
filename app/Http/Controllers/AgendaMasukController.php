@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Disposisi;
 use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\Facades\DataTables;
@@ -66,23 +67,18 @@ class AgendaMasukController extends Controller
         return view('pages.suratmasuk.cetak', compact('data'));
     }
 
-    public function cetakpertanggal($awal = '', $akhir = '')
+    public function pdf(Request $request)
     {
-        // if ($awal && $akhir) {
-        //     $data = SuratMasuk::with('klasifikasi')
-        //         ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $akhir)->format('Y-m-d')])
-        //         ->get();
-        // } else {
-        //     $data = SuratMasuk::with('klasifikasi')->get();
-        // }
-
-
-
-
-        $data = SuratMasuk::with('klasifikasi')->get();
-        if ($awal = '' or $awal = '') {
+        if ($request->filled('dt_awal') && $request->filled('dt_akhir')) {
+            $data = SuratMasuk::with('klasifikasi')
+                ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $request->dt_awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $request->dt_akhir)->format('Y-m-d')])
+                ->get();
+        } else {
+            $data = SuratMasuk::with('klasifikasi')->get();
         }
-
-        return $data;
+        // return view('pages.suratmasuk.cetak');
+        $pdf = Pdf::loadView('pages.suratmasuk.cetak', compact('data'))->setOptions(['defaultFont' => 'sans-serif']);
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream('SuratMasuk.pdf');
     }
 }
