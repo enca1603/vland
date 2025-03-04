@@ -9,8 +9,9 @@
 <div class="card">
     <div class="card-header">
         <h5 class="card-title">Filter</h5>
-        <form action="{{ route('agenda.agendamasuk.pdf') }}" method="post">
+        {{-- <form id="form-filter" action="{{ route('agenda.agendamasuk.pdf') }}" method="post">
             @csrf
+            @method('post')
             <div class="row">
                 <div class="col-md-3 col-12 mb-2">
                     <label for="dt_awal" class="form-label">Tgl. Awal</label>
@@ -25,12 +26,34 @@
                 <div class="col-md-6 col-12 pt-6 mb-0">
                     <button id="btnFilter" class="btn btn-primary" onclick="event.preventDefault()">Filter</button>
                     <button id="btnReset" class="btn btn-danger" onclick="event.preventDefault()">Reset</button>
-                    <a href="#" target="_blank">
-                        <button id="btnPdf" class="btn btn-info"><i class="fa fa-file-pdf me-2"></i>PDF</button>
-                    </a>
+                    <a type="button" id="btnPdf" class="btn btn-info" href="#"
+                        onclick="event.preventDefault(); document.getElementById('form-filter').submit();"><i
+                            class="fa fa-file-pdf me-2"></i>PDF</a>
                 </div>
             </div>
-        </form>
+        </form> --}}
+
+        <div class="row">
+            <form id="form-filter" action="" method="post">
+                @csrf
+                <div class="col-md-3 col-12 mb-2">
+                    <label for="dt_awal" class="form-label">Tgl. Awal</label>
+                    <input type="text" id="dt_awal" name="dt_awal" placeholder="dd-mm-yyyy" autocomplete="off"
+                        class="form-control input_filter_tgl">
+                </div>
+                <div class="col-md-3 col-12 mb-2">
+                    <label for="dt_akhir" class="form-label">Tgl. Akhir</label>
+                    <input type="text" id="dt_akhir" name="dt_akhir" placeholder="dd-mm-yyyy" autocomplete="off"
+                        class="form-control input_filter_tgl">
+                </div>
+            </form>
+            <div class="col-md-6 col-12 pt-6 mb-0">
+                <button id="btnFilter" class="btn btn-primary">Filter</button>
+                <button id="btnReset" class="btn btn-danger">Reset</button>
+                <button id="btnPdf" class="btn btn-info" onclick="cetak('{{ route('agenda.agendamasuk.print') }}')"><i
+                        class="fa fa-file-pdf me-2"></i>PDF</button>
+            </div>
+        </div>
     </div>
 
     <div class="card-datatable table-responsive">
@@ -110,23 +133,12 @@
         load_data();
     });
 
-    $('#btnPdfX').on('click', function(){
-        awal = $('#dt_awal').val();
-        akhir = $('#dt_akhir').val();
-
-        $.ajax({
-            url: "{{ route('agenda.agendamasuk.pdf') }}",
-            type:"GET",
-            dataType: "JSON",
-            data:{
-                _method: "GET",
-                awal: awal,
-                akhir: akhir
-            },
-            success: function(respon){
-                console.log(respon);
-            }
-        })
-    })
+    function cetak(url)
+    {
+        $('#form-filter')
+            .attr('target', '_blank')
+            .attr('action', url)
+            .submit();
+    }
 </script>
 @endpush

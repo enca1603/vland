@@ -54,19 +54,7 @@ class AgendaMasukController extends Controller
 
     public function print(Request $request)
     {
-        if ($request->filled('awal') && $request->filled('akhir')) {
-            $data = SuratMasuk::with('klasifikasi')
-                ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $request->awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $request->akhir)->format('Y-m-d')])
-                ->get();
-        } else {
-            $data = SuratMasuk::with('klasifikasi')->get();
-        }
 
-        return view('pages.suratmasuk.cetak', compact('data'));
-    }
-
-    public function pdf(Request $request)
-    {
         if ($request->filled('dt_awal') && $request->filled('dt_akhir')) {
             $data = SuratMasuk::with('klasifikasi')
                 ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $request->dt_awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $request->dt_akhir)->format('Y-m-d')])
@@ -74,22 +62,54 @@ class AgendaMasukController extends Controller
         } else {
             $data = SuratMasuk::with('klasifikasi')->get();
         }
-        return view('pages.suratmasuk.dompdf', [
+        // dd($data);
+
+        // return view('pages.suratmasuk.pdf', [
+        //     'data' => $data,
+        //     'awal' => $request->dt_awal,
+        //     'akhir' => $request->dt_akhir,
+        // ]);
+
+        $pdf = Pdf::loadView('pages.suratmasuk.dompdf', [
             'data' => $data,
-            'awal' => $request->dt_awal,
-            'akhir' => $request->dt_akhir
+            'awal' => Carbon::parse($request->dt_awal)->format('d F Y'),
+            'akhir' => Carbon::parse($request->dt_akhir)->format('d F Y')
+        ])->setOptions(['defaultFont' => 'sans-serif']);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true
         ]);
-        // $pdf = Pdf::loadView('pages.suratmasuk.dompdf', [
+        $pdf->render();
+        return $pdf->stream('SuratMasuk.pdf');
+    }
+
+    public function pdf(Request $request)
+    {
+        // dd($request->all());
+        if ($request->filled('dt_awal') && $request->filled('dt_akhir')) {
+            $data = SuratMasuk::with('klasifikasi')
+                ->whereBetween('tgl_surat', [Carbon::createFromFormat('d-m-Y', $request->dt_awal)->format('Y-m-d'), Carbon::createFromFormat('d-m-Y', $request->dt_akhir)->format('Y-m-d')])
+                ->get();
+        } else {
+            $data = SuratMasuk::with('klasifikasi')->get();
+        }
+        // return view('pages.suratmasuk.dompdf', [
         //     'data' => $data,
         //     'awal' => $request->dt_awal,
         //     'akhir' => $request->dt_akhir
-        // ])->setOptions(['defaultFont' => 'sans-serif']);
-        // $pdf->setPaper('A4', 'landscape');
-        // $pdf->setOption([
-        //     'isRemoteEnabled' => true,
-        //     'isHtml5ParserEnabled' => true
         // ]);
-        // $pdf->render();
-        // return $pdf->stream('SuratMasuk.pdf');
+        $pdf = Pdf::loadView('pages.suratmasuk.dompdf', [
+            'data' => $data,
+            'awal' => $request->dt_awal,
+            'akhir' => $request->dt_akhir
+        ])->setOptions(['defaultFont' => 'sans-serif']);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->setOption([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true
+        ]);
+        $pdf->render();
+        return $pdf->stream('SuratMasuk.pdf');
     }
 }

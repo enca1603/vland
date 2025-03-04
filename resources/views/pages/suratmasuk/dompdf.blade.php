@@ -6,17 +6,53 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
+    <!-- Core CSS -->
 
-    <link rel="stylesheet" href="{{ base_path('public/assets/vendor/css/core.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        h4 {
+            margin-top: 0;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+        }
+
+        hr {
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <div>
-        <p>{{ asset('assets/vendor/css/core.css') }}</p>
-        <p>{{ public_path('assets/vendor/css/core.css') }}</p>
-        <p class=" text-center">Laporan Surat Masuk</p>
-        <p class=" text-center">Tanggal : {{ $awal ?? '-' }} s.d {{ $akhir ?? '-' }}</p>
-        <table class="table" style="border: 1px solid;">
+        <h1 class="text-center">Laporan Surat Masuk</h1>
+        <h4 class="text-center">Tanggal : {{ $awal ?? '-' }} s.d {{ $akhir ?? '-' }}</h4>
+        <table>
             <thead>
                 <tr>
                     <th>Tanggal</th>
@@ -38,8 +74,6 @@
                 @endforeach
             </tbody>
         </table>
-        </>
-        </script>
 </body>
 
 </html>
