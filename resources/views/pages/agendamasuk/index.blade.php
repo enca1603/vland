@@ -46,13 +46,15 @@
                     <input type="text" id="dt_akhir" name="dt_akhir" placeholder="dd-mm-yyyy" autocomplete="off"
                         class="form-control input_filter_tgl">
                 </div>
+
+                <div class="col-md-6 col-12 pt-6 mb-0">
+                    <button id="btnFilter" class="btn btn-primary">Filter</button>
+                    <button id="btnReset" class="btn btn-danger">Reset</button>
+                    <button id="btnPdf" class="btn btn-info"
+                        onclick="cetak('{{ route('agenda.agendamasuk.print') }}')"><i
+                            class="fa fa-file-pdf me-2"></i>PDF</button>
+                </div>
             </form>
-            <div class="col-md-6 col-12 pt-6 mb-0">
-                <button id="btnFilter" class="btn btn-primary">Filter</button>
-                <button id="btnReset" class="btn btn-danger">Reset</button>
-                <button id="btnPdf" class="btn btn-info" onclick="cetak('{{ route('agenda.agendamasuk.print') }}')"><i
-                        class="fa fa-file-pdf me-2"></i>PDF</button>
-            </div>
         </div>
     </div>
 
