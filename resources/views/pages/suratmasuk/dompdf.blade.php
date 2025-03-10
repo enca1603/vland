@@ -12,7 +12,6 @@
         body {
             margin: 0;
             padding: 0;
-            text-align: center;
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -27,6 +26,7 @@
 
         table {
             width: 100%;
+            font-size: 11pt;
         }
 
         table,
@@ -38,12 +38,16 @@
 
         th,
         td {
-            padding: 10px;
+            padding: 5px;
         }
 
         hr {
             border: 1px solid black;
             margin-bottom: 10px;
+        }
+
+        .text-center {
+            text-align: center;
         }
     </style>
 </head>
@@ -65,11 +69,11 @@
             <tbody>
                 @foreach ($data as $dt)
                 <tr>
-                    <td>{{ $dt->tgl_surat }}</td>
+                    <td class="text-center">{{ $dt->tgl_surat }}</td>
                     <td>{{ $dt->no_surat }}</td>
                     <td>{{ $dt->pengirim }}</td>
                     <td>{{ $dt->prihal }}</td>
-                    <td>{{ $dt->tgl_terima }}</td>
+                    <td class="text-center">{{ $dt->tgl_terima }}</td>
                 </tr>
                 @endforeach
             </tbody>
